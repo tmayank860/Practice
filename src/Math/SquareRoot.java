@@ -2,24 +2,25 @@ package Math;
 
 public class SquareRoot {
     public static void main(String[] args) {
-        int number = 80;
-        int root = findSquareRootOf(number, 0, number / 2, 1);
-        System.out.println(root);
+        int number = 2147395599;
+        int squareRoot = findSquareRootOf(number, 0, number / 2);
+        System.out.println(squareRoot);
     }
 
     //--------- Using binary search ----------
     // Find a no which when multiplied by itself return the given number
     // Time Complexity: O(log n)
-    private static int findSquareRootOf(int n, int startIndex, int endIndex, int root) {
+    // Input: 2147395599
+    // Output: 46339
+    private static int findSquareRootOf(int n, int startIndex, int endIndex) {
         if (startIndex <= endIndex) {
             int mid = startIndex + (endIndex - startIndex) / 2;
-            int midSquare = mid * mid;
-            if (midSquare == n)
+            if (mid > n / mid)
+                return findSquareRootOf(n, startIndex, mid - 1);
+            if (mid + 1 > n / (mid + 1))
                 return mid;
-            if (midSquare > n)
-                return findSquareRootOf(n, startIndex, mid - 1, root);
-            return findSquareRootOf(n, mid + 1, endIndex, mid);
+            return findSquareRootOf(n, mid + 1, endIndex);
         }
-        return root;
+        return -1;
     }
 }
